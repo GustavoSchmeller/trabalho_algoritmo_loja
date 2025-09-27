@@ -1,4 +1,6 @@
 class Produto:
+    dict_produtos = {}
+    
     def __init__( self,nome,preco,quantidade ):
         self._nome = nome
         self._preco = preco
@@ -28,5 +30,8 @@ class Produto:
     def quantidade( self,produto_quantidade ):
         self._quantidade = produto_quantidade
     
+    def __str__( self ):
+        return f"Nome: { self.nome }, Preço: R${ self.preco }, Quantidade: { self.quantidade }"
 
-    
+    def salvar( self,numero ):
+        Produto.dict_produtos[numero]= self
