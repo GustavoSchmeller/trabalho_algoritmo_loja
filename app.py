@@ -1,22 +1,37 @@
 from classe_produto import Produto
 
 
-
-
 def cadastrarProduto():
-    print("################# CADASTRAR")
-    nome = input("Qual o nome do produto?")
-    preco = float(input("Qual o preço do produto?"))
-    quantidade = int(input("Qual a quantidade do produto?"))
+    print("==============|CADASTRAR")
+    produto = Produto()
+
+    while True: # PEGAR E VALIDAR NOME
+        nome = input("Qual o nome do produto?\n: ")
+        try:
+            produto.nome = nome
+            break
+        except ValueError as erro:
+            print(f"ERRO: { erro }")
+
+    while True: # PEGAR E VALIDAR PREÇO
+        preco = input("Qual o preço do produto?\n: ")
+        try:
+            produto.preco = preco
+            break
+        except ValueError as erro:
+            print(f"ERRO: { erro }")
+
     
-    produto = Produto("","","")
-    produto.nome = nome
-    produto.preco = preco
-    produto.quantidade = quantidade
-    
-    id = gerarId()
-    
-    produto.salvar(id)
+    while True: # PEGAR E VALIDAR QUANTIDADE
+        quantidade = input("Qual a quantidade do produto?\n: ")
+        try:
+            produto.quantidade = quantidade
+            break
+        except ValueError as erro:
+            print(f"ERRO: { erro }")
+            
+    produto.produtoId = gerarId()
+    produto.salvar()
     return 
 
 def gerarId():
@@ -27,7 +42,7 @@ def gerarId():
 
 def verProduto():
     for chave, valor in Produto.dict_produtos.items():
-        print(f"Produto ID: {chave}\n- {valor}")
+        print(f"Produto ID: { chave }{ valor }")
     return
 
 
