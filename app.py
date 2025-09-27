@@ -35,34 +35,44 @@ def cadastrarProduto():
     return 
 
 def gerarId():
-    if Produto.dict_produtos:
-        return max(Produto.dict_produtos.keys()) + 1
+    if Produto.produtosArmazenados:
+        return len(Produto.produtosArmazenados) + 1
     else:
         return 1
 
 def verProduto():
-    for chave, valor in Produto.dict_produtos.items():
-        print(f"Produto ID: { chave }{ valor }")
-    return
+    print("==============|PRODUTOS")
+    if Produto.produtosArmazenados:
+        for produto in Produto.produtosArmazenados:
+            print(f"\n{ produto }\n")
+        return
+    else:
+        print("\nNão há produtos cadastrados\n")
 
 
-# Iniciando APP
+# Iniciando APP de calçados
 
 while True:
     print("Escolha uma opção:")
     print("0 - Sair")
-    print("1 - Cadastrar produtos")
-    print("2 - Ver produtos")
-    opcao_selecionada = int(input(": "))
+    print("1 - Cadastrar Produtos")
+    print("2 - Ver Produtos")
     
-    if opcao_selecionada == 0:              # SAIR
-        print("\nSaindo do programa...\n")
-        break
-    elif opcao_selecionada == 1:            # CADASTRAR
-        cadastrarProduto()
-    elif opcao_selecionada == 2:            # VER PRODUTOS
-        verProduto()
-    else:
+    try:
+        opcaoSelecionada = int(input(": "))      
+        if opcaoSelecionada == 0:              # SAIR
+            print("\nSaindo do programa...\n")
+            break
+        elif opcaoSelecionada == 1:            # CADASTRAR
+            cadastrarProduto()
+        elif opcaoSelecionada == 2:            # VER PRODUTOS
+            verProduto()
+        else:
+            print("\nOPÇÃO INVÁLIDA.\n")
+        
+    except ValueError:
         print("\nOPÇÃO INVÁLIDA.\n")
+    
+
 
 

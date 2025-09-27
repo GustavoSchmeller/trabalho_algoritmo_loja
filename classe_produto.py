@@ -1,5 +1,5 @@
 class Produto:
-    dict_produtos = {}
+    produtosArmazenados = []
     
     def __init__( self ):
         pass
@@ -11,6 +11,10 @@ class Produto:
     @property
     def preco( self ):
         return self._preco
+    
+    @property
+    def tamanho( self ):
+        return self._tamanho
     
     @property
     def quantidade( self ):
@@ -38,6 +42,13 @@ class Produto:
         else:
             self._preco = precoValido  
     
+    @tamanho.setter
+    def tamanho( self,tamanho ):
+        
+        # FAZER....
+        
+        self._tamanho = tamanho
+    
     @quantidade.setter
     def quantidade( self,produto_quantidade ):
         try: 
@@ -54,8 +65,8 @@ class Produto:
         self._produtoId = id
     
     def __str__( self ):
-        return f"\n- Nome: { self.nome }\n- Preço: R${ self.preco }\n- Quantidade: { self.quantidade }"
+        return f"- ID: { self.produtoId }\n- Nome: { self.nome }\n- Preço: R${ self.preco }\n- Quantidade: { self.quantidade }"
 
     def salvar( self ):
-        Produto.dict_produtos[ self._produtoId ]= self
+        Produto.produtosArmazenados.append(self)
         return
