@@ -43,11 +43,18 @@ class Produto:
             self._preco = precoValido  
     
     @tamanho.setter
-    def tamanho( self,tamanho ):
-        
-        # FAZER....
-        
-        self._tamanho = tamanho
+    def tamanho( self,numeroTamanho ):
+        tamanhos = ("PP", "P", "M", "G", "GG", "XG", "XGG", "EG")
+        try:
+            tamanhoValido = int( numeroTamanho )
+            if tamanhoValido < 1 or tamanhoValido > 8:
+                raise ValueError("O valor informado deve ser entre 1 e 8")
+            else:
+                for indice,tamanho in enumerate( tamanhos, start=1 ):
+                    if indice == tamanhoValido:
+                        self._tamanho = tamanho
+        except ValueError:
+            raise ValueError("O valor informado é inválido")
     
     @quantidade.setter
     def quantidade( self,produto_quantidade ):
@@ -65,7 +72,7 @@ class Produto:
         self._produtoId = id
     
     def __str__( self ):
-        return f"- ID: { self.produtoId }\n- Nome: { self.nome }\n- Preço: R${ self.preco }\n- Quantidade: { self.quantidade }"
+        return f"- ID: { self.produtoId }\n- Nome: { self.nome }\n- Preço: R${ self.preco }\n- Tamanho: { self.tamanho }\n- Quantidade: { self.quantidade }"
 
     def salvar( self ):
         Produto.produtosArmazenados.append(self)
