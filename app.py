@@ -1,4 +1,5 @@
 from classe_produto import Produto
+from classe_produto import ProdutoDesconto
 
 listaProdutos = []
 categorias = ("Camiseta", "Camisa", "Blusa", "Regata")
@@ -84,9 +85,14 @@ def cadastrarProdutos():
                          
     produto.produtoId = Produto.gerarIdProduto()
     
+    if tamanho == "PP":                                         # DESCONTO NÃO ESTÁ SENDO APLICADO DEPOIS DE EDITAR - VERIFICAR 
+        produto = ProdutoDesconto( produto.produtoId,marca,preco,tamanho,categoria,quantidade,descricao )
+    else:
+        produto = Produto( produto.produtoId,marca,preco,tamanho,categoria,quantidade,descricao )
+    
     confirmacao = input("Deseja salvar? (Digite 's' para salvar ou qualquer tecla para sair)\n: ")
     if confirmacao.upper() == "S":
-        listaProdutos.append(Produto( produto.produtoId,marca,preco,tamanho,categoria,quantidade,descricao ))
+        listaProdutos.append(produto)
         produto.salvarProduto()
         print("SUCESSO: Produto cadastrado!")
     else:

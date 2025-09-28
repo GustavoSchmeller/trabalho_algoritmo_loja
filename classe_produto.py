@@ -145,3 +145,20 @@ class Produto:
             f"(6) - Descrição: { self.descricao }")
 
     
+class ProdutoDesconto(Produto):
+    def __init__( self,produtoID,marca,preco,tamanho,categoria,quantidade,descricao ):
+        super().__init__( produtoID,marca,preco,tamanho,categoria,quantidade,descricao )
+        self.aplicarDesconto()
+        
+    def aplicarDesconto( self ):
+        if self.tamanho == "PP":
+            self._preco = self.preco - (self.preco * 0.2) 
+            
+    def __str__( self ):
+        return (f"#ID: { self.produtoId }"
+                f"\n- Marca: { self.marca }"
+                f"\n- Preço: R$ { self.preco } (desconto aplicado)"
+                f"\n- Tamanho: { self.tamanho } (possui 20% de desconto)"
+                f"\n- Categoria: { self.categoria }"
+                f"\n- Quantidade: { self.quantidade }"
+                f"\n- Descrição: { self.descricao }")
