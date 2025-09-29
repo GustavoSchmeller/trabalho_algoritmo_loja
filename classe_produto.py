@@ -1,6 +1,10 @@
+from valoresGlobais import tamanhos
+from valoresGlobais import categorias
+from valoresGlobais import produtosArmazenados
+from valoresGlobais import tamanhosComDesconto
+
 class Produto:
     produtosArmazenados = []
-    categorias = ("Camiseta", "Camisa", "Blusa", "Regata")
 
     def __init__( self,produtoID,marca,preco,tamanho,categoria,quantidade,descricao ):
         self.produtoId = produtoID
@@ -51,7 +55,7 @@ class Produto:
             self._marca = produto_marca.upper()
     
     @preco.setter
-    def preco( self,produto_preco ):
+    def preco( self,produto_preco ):      
         try:
             precoValido = float( produto_preco )
         except ValueError:
@@ -63,7 +67,6 @@ class Produto:
     
     @tamanho.setter
     def tamanho( self,produto_tamanho ):
-        tamanhos = ("PP", "P", "M", "G", "GG", "XG", "XGG", "EG")
         try:
             tamanhoValido = int( produto_tamanho )
             if tamanhoValido < 1 or tamanhoValido > len( tamanhos ):
@@ -77,7 +80,6 @@ class Produto:
     
     @categoria.setter
     def categoria( self,produto_categoria ):
-        categorias = ("Camiseta", "Camisa", "Blusa", "Regata")
         try:
             categoriaValido = int( produto_categoria )
             if categoriaValido < 1 or categoriaValido > len( categorias ):
@@ -123,26 +125,27 @@ class Produto:
                 f"\n- Descrição: { self.descricao }")
     
     def gerarIdProduto():
-        if Produto.produtosArmazenados:
-            return len(Produto.produtosArmazenados) + 1
+        if produtosArmazenados:
+            return len(produtosArmazenados) + 1
         else:
             return 1
 
     def salvarProduto( self ):
-        Produto.produtosArmazenados.append( self )
+        produtosArmazenados.append( self )
         return
     
     def mostrarProdutos():
-        for produto in Produto.produtosArmazenados:
+        for produto in produtosArmazenados:
             print(f"\n{ produto }")
             
     def mostrarItensProduto( self ):
-        print(f"(1) - Marca: { self.marca }\n"
-            f"(2) - Preço: { self.preco }\n"
-            f"(3) - Tamanho: { self.tamanho }\n"
-            f"(4) - Categoria: { self.categoria }\n"
-            f"(5) - Quantidade: { self.quantidade }\n"
-            f"(6) - Descrição: { self.descricao }")
+        print(f"(-) - Marca: { self.marca }\n"
+            f"(1) - Preço: { self.preco }\n"
+            f"(-) - Tamanho: { self.tamanho }\n"
+            f"(-) - Categoria: { self.categoria }\n"
+            f"(2) - Quantidade: { self.quantidade }\n"
+            f"(3) - Descrição: { self.descricao }\n")
+            
 
     
 class ProdutoDesconto(Produto):
@@ -151,7 +154,7 @@ class ProdutoDesconto(Produto):
         self.aplicarDesconto()
         
     def aplicarDesconto( self ):
-        if self.tamanho == "PP":
+        if self.tamanho in tamanhosComDesconto:
             self._preco = self.preco - (self.preco * 0.2) 
             
     def __str__( self ):

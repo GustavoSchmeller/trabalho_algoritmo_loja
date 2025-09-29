@@ -1,10 +1,10 @@
 from classe_produto import Produto
 from classe_produto import ProdutoDesconto
-
-listaProdutos = []
-categorias = ("Camiseta", "Camisa", "Blusa", "Regata")
-tamanhos = ("PP", "P", "M", "G", "GG", "XG", "XGG", "EG")
-
+from func_validarDesconto import validarDesconto
+from valoresGlobais import tamanhos
+from valoresGlobais import categorias
+from valoresGlobais import produtosArmazenados
+from valoresGlobais import tamanhosComDesconto
 
 def adicionarMarca( produto:Produto ):
     while True: # PEGAR E VALIDAR NOME
@@ -20,7 +20,11 @@ def adicionarPreco( produto:Produto ):
     while True: # PEGAR E VALIDAR PREÇO
         preco = input("Qual o preço do produto?\n: ")
         try:
-            produto.preco = preco
+            if validarDesconto( produto.tamanho ):
+                produto.preco = preco
+                produto.aplicarDesconto()
+            else:
+                produto.preco = preco
             break
         except ValueError as erro:
             print(f"ERRO: { erro }")
@@ -85,14 +89,13 @@ def cadastrarProdutos():
                          
     produto.produtoId = Produto.gerarIdProduto()
     
-    if tamanho == "PP":                                         # DESCONTO NÃO ESTÁ SENDO APLICADO DEPOIS DE EDITAR - VERIFICAR 
+    if validarDesconto( produto.tamanho ):                                         # DESCONTO NÃO ESTÁ SENDO APLICADO DEPOIS DE EDITAR - VERIFICAR 
         produto = ProdutoDesconto( produto.produtoId,marca,preco,tamanho,categoria,quantidade,descricao )
     else:
         produto = Produto( produto.produtoId,marca,preco,tamanho,categoria,quantidade,descricao )
     
     confirmacao = input("Deseja salvar? (Digite 's' para salvar ou qualquer tecla para sair)\n: ")
     if confirmacao.upper() == "S":
-        listaProdutos.append(produto)
         produto.salvarProduto()
         print("SUCESSO: Produto cadastrado!")
     else:
@@ -101,46 +104,52 @@ def cadastrarProdutos():
 
 def verProdutos():
     print("==============|VER PRODUTOS")
-    if listaProdutos:
-        for numero,_ in enumerate( listaProdutos,start=0 ):
-            print(f"\n{listaProdutos[numero]}")
+    if produtosArmazenados:
+        for numero,_ in enumerate( produtosArmazenados,start=0 ):
+            print(f"\n{produtosArmazenados[numero]}")
         return
     else:
         print("\n(Não há produtos cadastrados)")
 
 def editarProdutos():
     print("==============|EDITAR PRODUTOS")
-    if Produto.produtosArmazenados:
-        for produto in listaProdutos:
+    if produtosArmazenados:
+        for produto in produtosArmazenados:
             print(f"\n{produto}")
         while True:
             try: 
                 editarSelecao = int(input("\nQual produto você deseja editar? (Informe o ID)\n: "))
                 id = editarSelecao -1
-                if editarSelecao < 1 or editarSelecao > len( listaProdutos ):
+                if editarSelecao < 1 or editarSelecao > len( produtosArmazenados ):
                     print("ERRO: O ID digitado não existe")
                 else:
                     while True:
                         print(f"==============|PRODUTO ID #{id+1}\n")
                         try:
-                            listaProdutos[ id ].mostrarItensProduto()
-                            opcao = int(input(f"\nO que deseja editar desse produto? (Digite o numero referente ao item)\n: "))
-                            if opcao == 1:
-                                adicionarMarca( listaProdutos[ id ] )                
-                            elif opcao == 2:
-                                adicionarPreco( listaProdutos[ id ] )
-                            elif opcao == 3:
-                                adicionarTamanho( listaProdutos[ id ] )
-                            elif opcao == 4:
-                                adicionarCategoria( listaProdutos[ id ] )
-                            elif opcao == 5:
-                                adicionarQuantidade( listaProdutos[ id ] )
-                            elif opcao == 6:
-                                adicionarDescricao( listaProdutos[ id ] )
-                            else:
-                                print("ERRO: A opção escolhida não existe")
-                                
-                            continuarEditando = str(input("Deseja editar mais algum item do seu produto? (Digite 's' para salvar ou qualquer tecla para sair)\n: "))
+                            produtosArmazenados[ id ].mostrarItensProduto()
+                            while True:
+                                opcao = int(input(f"\nO que deseja editar desse produto? (Digite o numero referente ao item)\n: "))
+                                #if opcao == x:
+                                #    adicionarMarca( produtosArmazenados[ id ] )  
+                                #    break              
+                                if opcao == 1:
+                                    adicionarPreco( produtosArmazenados[ id ] )
+                                    break
+                                #elif opcao == x:
+                                #    adicionarTamanho( produtosArmazenados[ id ] )
+                                #    break
+                                #elif opcao == x:
+                                #    adicionarCategoria( produtosArmazenados[ id ] )
+                                #    break
+                                elif opcao == 2:
+                                    adicionarQuantidade( produtosArmazenados[ id ] )
+                                    break
+                                elif opcao == 3:
+                                    adicionarDescricao( produtosArmazenados[ id ] )
+                                    break
+                                else:
+                                    print("ERRO: A opção escolhida não existe")                                
+                            continuarEditando = str(input("Deseja editar mais algum item do seu produto? (Digite 's' para continuar ou qualquer tecla para sair)\n: "))
                             if continuarEditando.upper() == "S":
                                 pass
                             else:
