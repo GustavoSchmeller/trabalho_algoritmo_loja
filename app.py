@@ -1,10 +1,8 @@
-from classe_produto import Produto
-from classe_produto import ProdutoDesconto
+from valoresGlobais import tamanhos,categorias,produtosArmazenados,tamanhosComDesconto
+from classe_produto import Produto,ProdutoDesconto
 from func_validarDesconto import validarDesconto
-from valoresGlobais import tamanhos
-from valoresGlobais import categorias
-from valoresGlobais import produtosArmazenados
-from valoresGlobais import tamanhosComDesconto
+
+
 
 def adicionarMarca( produto:Produto ):
     while True: # PEGAR E VALIDAR NOME
@@ -187,10 +185,10 @@ while True:
         elif opcaoSelecionada == 3:            # EDITAR PRODUTOS
             editarProdutos()
         else:
-            print("\nOPÇÃO INVÁLIDA.\n")
+            print("\nERRO: opção inválida.\n")
         
     except ValueError:
-        print("\nOPÇÃO INVÁLIDA.\n")
+        print("\nERRO: opção inválida.\n")
     
 
 

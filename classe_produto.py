@@ -1,10 +1,8 @@
-from valoresGlobais import tamanhos
-from valoresGlobais import categorias
-from valoresGlobais import produtosArmazenados
-from valoresGlobais import tamanhosComDesconto
+from valoresGlobais import tamanhos,categorias,produtosArmazenados,tamanhosComDesconto
 
 class Produto:
     produtosArmazenados = []
+    produtosId = []
 
     def __init__( self,produtoID,marca,preco,tamanho,categoria,quantidade,descricao ):
         self.produtoId = produtoID
@@ -104,7 +102,7 @@ class Produto:
             
     @descricao.setter
     def descricao( self, produto_descricao ):
-        if len(produto_descricao) == 0 or len(produto_descricao) < 4:
+        if len(produto_descricao) == 0 or len( produto_descricao ) < 4:
             raise ValueError("Nenhuma descrição do produto ou descrição muito pequena")
         elif len(produto_descricao) > 20:
             raise ValueError("Você excedeu o numero de caracteres")
@@ -126,7 +124,12 @@ class Produto:
     
     def gerarIdProduto():
         if produtosArmazenados:
-            return len(produtosArmazenados) + 1
+            proximoId = len(produtosArmazenados) + 1
+            while True:
+                if proximoId in Produto.produtosArmazenados:
+                    pass
+                else:
+                    return proximoId
         else:
             return 1
 
