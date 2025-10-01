@@ -18,8 +18,8 @@ class Produto:
         return self._produtoId
     
     @produtoId.setter
-    def produtoId( self,produto_id ):
-        self._produtoId = produto_id
+    def produtoId( self,inserirId ):
+        self._produtoId = inserirId
 
     def gerarIdProduto():
         if produtosArmazenados:
