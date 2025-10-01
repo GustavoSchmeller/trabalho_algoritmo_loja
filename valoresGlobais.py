@@ -1,6 +1,6 @@
 produtosArmazenados = []
 
-categorias = ("Camiseta", 
+categorias = ("Camiseta",
               "Camisa", 
               "Blusa", 
               "Regata")

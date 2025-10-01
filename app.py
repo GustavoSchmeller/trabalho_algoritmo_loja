@@ -1,14 +1,12 @@
-from valoresGlobais import tamanhos,categorias,produtosArmazenados,tamanhosComDesconto
-from classe_produto import Produto,ProdutoDesconto
-from func_validarDesconto import validarDesconto
-
-
+from valoresGlobais import tamanhos,categorias,produtosArmazenados
+from classeProduto import Produto,ProdutoDesconto
+from funcValidarDesconto import validarDesconto
 
 def adicionarMarca( produto:Produto ):
     while True: # PEGAR E VALIDAR NOME
-        marca = input("Qual a marca do produto?\n: ")
+        marcaInformada = input("Qual a marca do produto?\n: ")
         try:
-            produto.marca = marca
+            produto.marca = marcaInformada
             break
         except ValueError as erro:
             print(f"ERRO: { erro }")
@@ -16,13 +14,13 @@ def adicionarMarca( produto:Produto ):
 
 def adicionarPreco( produto:Produto ):
     while True: # PEGAR E VALIDAR PREÇO
-        preco = input("Qual o preço do produto?\n: ")
+        precoInformado = input("Qual o preço do produto?\n: ")
         try:
             if validarDesconto( produto.tamanho ):
-                produto.preco = preco
+                produto.preco = precoInformado
                 produto.aplicarDesconto()
             else:
-                produto.preco = preco
+                produto.preco = precoInformado
             break
         except ValueError as erro:
             print(f"ERRO: { erro }")
@@ -33,9 +31,9 @@ def adicionarTamanho( produto:Produto ):
         print("Qual o tamanho do produto?")
         for indice,tamanho in enumerate( tamanhos, start=1 ):
             print(f"({ indice }) - { tamanho }")
-        tamanho = input(": ")        
+        tamanhoInformado = input(": ")        
         try:
-            produto.tamanho = tamanho
+            produto.tamanho = tamanhoInformado
             break
         except ValueError as erro:
             print(f"ERRO: { erro }")
@@ -46,9 +44,9 @@ def adicionarCategoria( produto:Produto ):
         print("Qual a categoria do produto?")
         for indice,tamanho in enumerate( categorias, start=1 ):
             print(f"({ indice }) - { tamanho }")
-        categoria = input(": ")        
+        categoriaInformada = input(": ")        
         try: 
-            produto.categoria = categoria
+            produto.categoria = categoriaInformada
             break
         except ValueError as erro:
             print(f"ERRO: { erro }")
@@ -56,9 +54,9 @@ def adicionarCategoria( produto:Produto ):
 
 def adicionarQuantidade( produto:Produto ):
     while True: # PEGAR E VALIDAR QUANTIDADE
-        quantidade = input("Qual a quantidade do produto?\n: ")
+        quantidadeInformada = input("Qual a quantidade do produto?\n: ")
         try:
-            produto.quantidade = quantidade
+            produto.quantidade = quantidadeInformada
             break
         except ValueError as erro:
             print(f"ERRO: { erro }")
@@ -66,9 +64,9 @@ def adicionarQuantidade( produto:Produto ):
 
 def adicionarDescricao( produto:Produto ):
     while True:
-        descricao = input("Dê uma breve descrição do produto. (até 20 caracteres)\n: ")
+        descricaoInformada = input("Dê uma breve descrição do produto. (até 20 caracteres)\n: ")
         try:
-            produto.descricao = descricao
+            produto.descricao = descricaoInformada
             break
         except ValueError as erro:
             print(f"ERRO: { erro }")
@@ -92,8 +90,8 @@ def cadastrarProdutos():
     else:
         produto = Produto( produto.produtoId,marca,preco,tamanho,categoria,quantidade,descricao )
     
-    confirmacao = input("Deseja salvar? (Digite 's' para salvar ou qualquer tecla para sair)\n: ")
-    if confirmacao.upper() == "S":
+    confirmacaoParaSalvar = input("Deseja salvar? (Digite 's' para salvar ou qualquer tecla para sair)\n: ")
+    if confirmacaoParaSalvar.upper() == "S":
         produto.salvarProduto()
         print("SUCESSO: Produto cadastrado!")
     else:
@@ -104,7 +102,7 @@ def verProdutos():
     print("==============|VER PRODUTOS")
     if produtosArmazenados:
         for numero,_ in enumerate( produtosArmazenados,start=0 ):
-            print(f"\n{produtosArmazenados[numero]}")
+            print(f"\n{ produtosArmazenados[ numero ] }")
         return
     else:
         print("\n(Não há produtos cadastrados)")
@@ -113,7 +111,7 @@ def editarProdutos():
     print("==============|EDITAR PRODUTOS")
     if produtosArmazenados:
         for produto in produtosArmazenados:
-            print(f"\n{produto}")
+            print(f"\n{ produto }")
         while True:
             try: 
                 editarSelecao = int(input("\nQual produto você deseja editar? (Informe o ID)\n: "))
