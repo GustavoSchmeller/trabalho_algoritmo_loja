@@ -2,8 +2,9 @@ from valoresGlobais import tamanhos,categorias,produtosArmazenados
 from classeProduto import Produto,ProdutoDesconto
 from funcValidarDesconto import validarDesconto
 
+# SOLICITA O NOME E FAZ VALIDAÇÕES NO METÓDO
 def adicionarMarca( produto:Produto ):
-    while True: # PEGAR E VALIDAR NOME
+    while True: 
         marcaInformada = input("Qual a marca do produto?\n: ")
         try:
             produto.marca = marcaInformada
@@ -12,8 +13,9 @@ def adicionarMarca( produto:Produto ):
             print(f"ERRO: { erro }")
     return produto.marca
 
+# SOLICITA O PREÇO E FAZ VALIDAÇÕES NO METÓDO
 def adicionarPreco( produto:Produto ):
-    while True: # PEGAR E VALIDAR PREÇO
+    while True: 
         precoInformado = input("Qual o preço do produto?\n: ")
         try:
             if validarDesconto( produto.tamanho ):
@@ -26,8 +28,9 @@ def adicionarPreco( produto:Produto ):
             print(f"ERRO: { erro }")
     return produto.preco
     
+# SOLICITA O TAMANHO E FAZ VALIDAÇÕES NO METÓDO
 def adicionarTamanho( produto:Produto ):
-    while True: # PEGAR E VALIDAR TAMANHO
+    while True: 
         print("Qual o tamanho do produto?")
         for indice,tamanho in enumerate( tamanhos, start=1 ):
             print(f"({ indice }) - { tamanho }")
@@ -39,6 +42,7 @@ def adicionarTamanho( produto:Produto ):
             print(f"ERRO: { erro }")
     return produto.tamanho
 
+# SOLICITA A CATEGORIA E FAZ VALIDAÇÕES NO METÓDO
 def adicionarCategoria( produto:Produto ):
     while True:
         print("Qual a categoria do produto?")
@@ -52,8 +56,9 @@ def adicionarCategoria( produto:Produto ):
             print(f"ERRO: { erro }")
     return produto.categoria
 
+# SOLICITA A QUANTIDADE E FAZ VALIDAÇÕES NO METÓDO
 def adicionarQuantidade( produto:Produto ):
-    while True: # PEGAR E VALIDAR QUANTIDADE
+    while True: 
         quantidadeInformada = input("Qual a quantidade do produto?\n: ")
         try:
             produto.quantidade = quantidadeInformada
@@ -62,6 +67,7 @@ def adicionarQuantidade( produto:Produto ):
             print(f"ERRO: { erro }")
     return produto.quantidade
 
+# SOLICITA A DESCRIÇÃO E FAZ VALIDAÇÕES NO METÓDO
 def adicionarDescricao( produto:Produto ):
     while True:
         descricaoInformada = input("Dê uma breve descrição do produto. (até 20 caracteres)\n: ")
@@ -72,6 +78,7 @@ def adicionarDescricao( produto:Produto ):
             print(f"ERRO: { erro }")
     return produto.descricao
 
+# INICIA O CADASTRO E CHAMA FUNÇÕES PARA VALIDAR
 def cadastrarProdutos():
     print("==============|CADASTRAR PRODUTOS")
     produto = Produto("","","","","","","")
@@ -82,10 +89,9 @@ def cadastrarProdutos():
     categoria = adicionarCategoria( produto )
     quantidade = adicionarQuantidade( produto )
     descricao = adicionarDescricao( produto )
-                         
     produto.produtoId = Produto.gerarIdProduto()
     
-    if validarDesconto( produto.tamanho ):                                         # DESCONTO NÃO ESTÁ SENDO APLICADO DEPOIS DE EDITAR - VERIFICAR 
+    if validarDesconto( produto.tamanho ):  
         produto = ProdutoDesconto( produto.produtoId,marca,preco,tamanho,categoria,quantidade,descricao )
     else:
         produto = Produto( produto.produtoId,marca,preco,tamanho,categoria,quantidade,descricao )
@@ -155,12 +161,11 @@ def editarProdutos():
                             print("ERRO: O valor digitado não é um inteiro")
                 break
             except ValueError:
-                print("ERRO: O valor digitado não é um inteiro")
-        
-        
-        
+                print("ERRO: O valor digitado não é um inteiro") 
     else:
         print("\n(Não há produtos cadastrados)")
+
+
 
 # Iniciando APP - Loja de roupa
 
