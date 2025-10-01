@@ -165,6 +165,27 @@ def editarProdutos():
     else:
         print("\n(Não há produtos cadastrados)")
 
+def apagarProdutos():
+    if produtosArmazenados:
+        for produto in produtosArmazenados:
+            print(f"\n{ produto }")
+        while True:
+            idParaApagar = input("Qual produto deseja deletar?")
+            try:
+                inteiro = int(idParaApagar)
+                break
+            except ValueError:
+                print(print("ERRO: O valor digitado não é um inteiro"))
+            for indice,_ in enumerate( produtosArmazenados ):
+                print(produtosArmazenados[ indice ].produtoId)
+                print(indice)
+                if produtosArmazenados[ indice ].produtoId == idParaApagar:
+                    produtosArmazenados[ indice ].nome = "teste"
+                    break
+            else:
+                print("ERRO: Não existe um produto com esse ID")
+    else:
+        print("\n(Não há produtos cadastrados para apagar)")
 
 
 # Iniciando APP - Loja de roupa
@@ -175,6 +196,7 @@ while True:
     print("1 - Cadastrar Produtos")
     print("2 - Ver Produtos")
     print("3 - Editar Produtos")
+    print("4 - Apagar Produtos - EM CONSTRUÇÃO")
     
     try:
         opcaoSelecionada = int(input(": "))      
@@ -187,6 +209,8 @@ while True:
             verProdutos()
         elif opcaoSelecionada == 3:            # EDITAR PRODUTOS
             editarProdutos()
+        elif opcaoSelecionada == 4:
+            apagarProdutos()
         else:
             print("\nERRO: opção inválida.\n")
         
