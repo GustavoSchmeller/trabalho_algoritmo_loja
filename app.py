@@ -176,11 +176,11 @@ def apagarProdutos():
                 break
             except ValueError:
                 print(print("ERRO: O valor digitado não é um inteiro"))
-            for indice,_ in enumerate( produtosArmazenados ):
-                print(produtosArmazenados[ indice ].produtoId)
-                print(indice)
-                if produtosArmazenados[ indice ].produtoId == idParaApagar:
-                    produtosArmazenados[ indice ].nome = "teste"
+            for indexID,_ in enumerate( produtosArmazenados ):
+                print(produtosArmazenados[ indexID ].produtoId)
+                print( indexID )
+                if produtosArmazenados[ indexID ].produtoId == idParaApagar: # AJUSTAR
+                    produtosArmazenados[ indexID ].nome = "teste"
                     break
             else:
                 print("ERRO: Não existe um produto com esse ID")
