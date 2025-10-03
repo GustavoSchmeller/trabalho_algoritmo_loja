@@ -1,8 +1,6 @@
-from valoresGlobais import tamanhos,categorias,produtosArmazenados,tamanhosComDesconto
+from valoresGlobais import tamanhos,categorias,produtosArmazenados,idsArmazenados,tamanhosComDesconto
 
 class Produto:
-    produtosArmazenados = []
-    produtosId = []
 
     def __init__( self,produtoID,marca,preco,tamanho,categoria,quantidade,descricao ):
         self.produtoId = produtoID
@@ -12,6 +10,15 @@ class Produto:
         self._categoria = categoria
         self._quantidade = quantidade
         self._descricao = descricao
+    
+    def __str__( self ):
+        return (f"#ID: { self.produtoId }"
+                f"\n- Marca: { self.marca }"
+                f"\n- Preço: R$ { self.preco }"
+                f"\n- Tamanho: { self.tamanho }"
+                f"\n- Categoria: { self.categoria }"
+                f"\n- Quantidade: { self.quantidade }"
+                f"\n- Descrição: { self.descricao }") 
     
     @property
     def produtoId( self ):
@@ -23,13 +30,11 @@ class Produto:
 
     def gerarIdProduto():
         if produtosArmazenados:
-            proximoId = len(produtosArmazenados) + 1
-            while True:
-                if proximoId in Produto.produtosArmazenados:
-                    pass
-                else:
-                    return proximoId
+            proximoId = len(idsArmazenados) + 1
+            idsArmazenados.append(proximoId)
+            return proximoId
         else:
+            idsArmazenados.append(1)
             return 1
             
     @property
@@ -40,8 +45,7 @@ class Produto:
     def marca( self,nomeInformado ):
         if len( nomeInformado ) <= 3:
             raise ValueError("O nome do produto deve conter mais do que três caracteres")
-        else:        
-            self._marca = nomeInformado.upper()
+        self._marca = nomeInformado.upper()
 
     @property
     def preco( self ):
@@ -55,8 +59,7 @@ class Produto:
             raise ValueError("O valor informado não é um numero ou está formatado incorretamente")
         if precoValidado <= 0:
             raise ValueError("O valor informado não pode ser menor ou igual a zero")
-        else:
-            self._preco = round( precoValidado,2 )
+        self._preco = round( precoValidado,2 )
     
     @property
     def tamanho( self ):
@@ -70,10 +73,9 @@ class Produto:
             raise ValueError("O valor informado é inválido")
         if tamanhoValidado < 1 or tamanhoValidado > len( tamanhos ):
             raise ValueError("O valor informado deve ser entre 1 e 8")
-        else:
-            for indice,tamanho in enumerate( tamanhos, start=1 ):
-                if indice == tamanhoValidado:
-                    self._tamanho = tamanho
+        for indice,tamanho in enumerate( tamanhos, start=1 ):
+            if indice == tamanhoValidado:
+                self._tamanho = tamanho
 
     @property
     def categoria(self):
@@ -87,10 +89,9 @@ class Produto:
             raise ValueError("A categoria deve ser um numero inteiro")
         if categoriaValidada < 1 or categoriaValidada > len( categorias ):
             raise ValueError("A categoria informada não existe")
-        else:
-            for indice,categoriaDeCategorias in enumerate(categorias, start=1):
-                if indice == categoriaValidada:
-                    self._categoria = categoriaDeCategorias
+        for indice,categoriaDeCategorias in enumerate(categorias, start=1):
+            if indice == categoriaValidada:
+                self._categoria = categoriaDeCategorias
     
     @property
     def quantidade( self ):
@@ -104,8 +105,7 @@ class Produto:
             raise ValueError("A quantidade deve ser um numero inteiro")
         if quantidadeValidada <= 0:
             raise ValueError("A quantidade deve ser maior que zero")
-        else:
-            self._quantidade = quantidadeValidada
+        self._quantidade = quantidadeValidada
 
     @property
     def descricao( self ):
@@ -117,8 +117,7 @@ class Produto:
             raise ValueError("Nenhuma descrição do produto ou descrição muito pequena")
         elif len(descricaoInformada) > 20:
             raise ValueError("Você excedeu o numero de caracteres")
-        else:
-            self._descricao = descricaoInformada
+        self._descricao = descricaoInformada
 
     def salvarProduto( self ):
         produtosArmazenados.append( self )
@@ -136,17 +135,8 @@ class Produto:
             f"(2) - Quantidade: { self.quantidade }\n"
             f"(3) - Descrição: { self.descricao }\n")
             
-    def __str__( self ):
-        return (f"#ID: { self.produtoId }"
-                f"\n- Marca: { self.marca }"
-                f"\n- Preço: R$ { self.preco }"
-                f"\n- Tamanho: { self.tamanho }"
-                f"\n- Categoria: { self.categoria }"
-                f"\n- Quantidade: { self.quantidade }"
-                f"\n- Descrição: { self.descricao }") 
-
     
-class ProdutoDesconto(Produto):
+class ProdutoDesconto( Produto ):
     def __init__( self,produtoID,marca,preco,tamanho,categoria,quantidade,descricao ):
         super().__init__( produtoID,marca,preco,tamanho,categoria,quantidade,descricao )
         self.aplicarDesconto()

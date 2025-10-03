@@ -1,4 +1,5 @@
 produtosArmazenados = []
+idsArmazenados = []
 
 categorias = ("Camiseta",
               "Camisa", 
