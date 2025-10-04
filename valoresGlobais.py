@@ -1,6 +1,10 @@
 produtosArmazenados = []
 idsArmazenados = []
 
+usuarios = {
+    "admin":"admin"
+}
+
 categorias = ("Camiseta",
               "Camisa", 
               "Blusa", 
@@ -15,7 +19,7 @@ tamanhos = ("PP",
             "XGG", 
             "EG")
 
-tamanhosComDesconto = [
-    "PP",
-    "M",
-]
+tamanhoseDescontos = {
+    "PP":20,
+    "M":10,
+}

@@ -1,4 +1,4 @@
-from valoresGlobais import tamanhos,categorias,produtosArmazenados,idsArmazenados,tamanhosComDesconto
+from valoresGlobais import tamanhos,categorias,produtosArmazenados,idsArmazenados,tamanhoseDescontos
 
 class Produto:
 
@@ -10,6 +10,7 @@ class Produto:
         self._categoria = categoria
         self._quantidade = quantidade
         self._descricao = descricao
+        self._precoComDesconto = None
     
     def __str__( self ):
         return (f"#ID: { self.produtoId }"
@@ -50,6 +51,10 @@ class Produto:
     @property
     def preco( self ):
         return self._preco
+    
+    @property
+    def precoComDesconto( self ):
+        return self._precoComDesconto
 
     @preco.setter
     def preco( self,precoInformado ):      
@@ -119,6 +124,7 @@ class Produto:
             raise ValueError("Você excedeu o numero de caracteres")
         self._descricao = descricaoInformada
 
+
     def salvarProduto( self ):
         produtosArmazenados.append( self )
         return
@@ -142,15 +148,21 @@ class ProdutoDesconto( Produto ):
         self.aplicarDesconto()
         
     def aplicarDesconto( self ):
-        if self.tamanho in tamanhosComDesconto:
-            precoDesconto = self.preco - (self.preco * 0.2) 
-            self._preco = round( precoDesconto,2 )
-            
+        for tamanho,desconto in tamanhoseDescontos.items():
+            if self.tamanho == tamanho:
+                desconto = desconto / 100
+                precoDesconto = self.preco - ( self.preco * desconto ) 
+                self._precoComDesconto = round( precoDesconto,2 )
+                   
     def __str__( self ):
+        for tamanho,desconto in tamanhoseDescontos.items():
+            if self.tamanho == tamanho:
+                valorDesconto = desconto
         return (f"#ID: { self.produtoId }"
                 f"\n- Marca: { self.marca }"
-                f"\n- Preço: R$ { self.preco } (desconto aplicado)"
-                f"\n- Tamanho: { self.tamanho } (possui 20% de desconto)"
+                f"\n- Preço original: R$ { self.preco }"
+                f"\n- Preço com desconto: R$ {self.precoComDesconto}"
+                f"\n- Tamanho: { self.tamanho } (possui {valorDesconto}% de desconto)"
                 f"\n- Categoria: { self.categoria }"
                 f"\n- Quantidade: { self.quantidade }"
                 f"\n- Descrição: { self.descricao }")

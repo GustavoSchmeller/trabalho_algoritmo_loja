@@ -1,6 +1,7 @@
-from valoresGlobais import tamanhosComDesconto
+from valoresGlobais import tamanhoseDescontos
 
 def validarDesconto( validarTamanho ):
-    if validarTamanho in tamanhosComDesconto:
-        return True
+    for tamanho,_ in tamanhoseDescontos.items():
+        if tamanho == validarTamanho:
+            return True
     return False

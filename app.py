@@ -1,4 +1,4 @@
-from valoresGlobais import tamanhos,categorias,produtosArmazenados
+from valoresGlobais import tamanhos,categorias,produtosArmazenados,idsArmazenados,usuarios
 from classeProduto import Produto,ProdutoDesconto
 from funcValidarDesconto import validarDesconto
 import os
@@ -88,12 +88,10 @@ def cadastrarProdutos():
     marca = adicionarMarca( produto )
     preco = adicionarPreco( produto )
     tamanho = adicionarTamanho( produto )
+    
     categoria = adicionarCategoria( produto )
     quantidade = adicionarQuantidade( produto )
     descricao = adicionarDescricao( produto )
-    
-    
-
     
     confirmacaoParaSalvar = input("Deseja salvar? (Digite 's' para salvar ou qualquer tecla para sair)\n: ")
     if confirmacaoParaSalvar.upper() == "S":
@@ -108,6 +106,7 @@ def cadastrarProdutos():
         print("CANCELADO: Produto não cadastrado.")
         return 
 
+# MOSTRA TODOS PRODUTOS CADASTRADOS PARA O USUÁRIO
 def verProdutos():
     limparTerminal()
     print("==============|VER PRODUTOS")
@@ -118,6 +117,7 @@ def verProdutos():
     else:
         print("\n(Não há produtos cadastrados)")
 
+# POSSIBILITA O USUÁRIO EDITAR OS ITENS DOS PRODUTOS
 def editarProdutos():
     limparTerminal()
     print("==============|EDITAR PRODUTOS")
@@ -175,7 +175,7 @@ def editarProdutos():
     else:
         print("\n(Não há produtos cadastrados)")
         
-
+# POSSIBILITA O USUÁRIO APAGAR OS PRODUTOS
 def apagarProdutos():
     limparTerminal()
     print("==============|APAGAR PRODUTOS")
@@ -211,39 +211,68 @@ def apagarProdutos():
     else:
         print("\n(Não há produtos cadastrados para apagar)")
 
-
+# FAZ A LIMPEZA DO TERMINAL
 def limparTerminal():
     os.system('cls')
 
-# Iniciando APP - Loja de roupa
+
+
+#------------------ Iniciando APP - Loja de roupa
 
 limparTerminal()
-while True:
-    print("\nEscolha uma opção:")
-    print("0 - Sair")
-    print("1 - Cadastrar Produtos")
-    print("2 - Ver Produtos")
-    print("3 - Editar Produtos")
-    print("4 - Apagar Produtos")
+# ADICIONADO UM PRODUTO PARA INICIO
+produtosArmazenados.append(ProdutoDesconto(1,"Vans",119.99,"M","Camiseta",43,"Camiseta preta com figuras"))
+idsArmazenados.append(1)
+continuarNoApp = True
+
+while continuarNoApp == True:
+    print("==============|LOGIN")
+    usuarioInput = input("Usuário: ")
+    senhaInput = input("Senha: ")
+    usuarioNaoExiste = False
     
-    try:
-        opcaoSelecionada = int(input(": "))      
-        if opcaoSelecionada == 0:              # SAIR
-            print("\nSaindo do programa...\n")
-            break
-        elif opcaoSelecionada == 1:            # CADASTRAR
-            cadastrarProdutos()
-        elif opcaoSelecionada == 2:            # VER PRODUTOS
-            verProdutos()
-        elif opcaoSelecionada == 3:            # EDITAR PRODUTOS
-            editarProdutos()
-        elif opcaoSelecionada == 4:
-            apagarProdutos()
+    for usuario,senha in usuarios.items():
+        if usuarioInput == usuario:
+            if senhaInput == senha:
+                usuarioNaoExiste = False
+                limparTerminal()
+                print(f"Olá, { usuario }. Seja bem-vindo!")
+                while True:
+                    print("\n==============|MENU\n")
+                    print("Escolha uma opção:")
+                    print("0 - Sair")
+                    print("1 - Cadastrar Produtos")
+                    print("2 - Ver Produtos")
+                    print("3 - Editar Produtos")
+                    print("4 - Apagar Produtos")
+                    
+                    try:
+                        opcaoSelecionada = int(input(": "))      
+                        if opcaoSelecionada == 0:              # SAIR
+                            print("\nSaindo do programa...\n")
+                            continuarNoApp = False
+                            break
+                        elif opcaoSelecionada == 1:            # CADASTRAR
+                            cadastrarProdutos()
+                        elif opcaoSelecionada == 2:            # VER PRODUTOS
+                            verProdutos()
+                        elif opcaoSelecionada == 3:            # EDITAR PRODUTOS
+                            editarProdutos()
+                        elif opcaoSelecionada == 4:
+                            apagarProdutos()
+                        else:
+                            print("\nERRO: opção inválida.\n")
+                        
+                    except ValueError:
+                        print("\nERRO: opção inválida.\n")
         else:
-            print("\nERRO: opção inválida.\n")
+            usuarioNaoExiste = True
         
-    except ValueError:
-        print("\nERRO: opção inválida.\n")
+        if usuarioNaoExiste:
+            limparTerminal()
+            print("ERRO: Usuário não existe ou senha incorreta")
+
+
     
 
 
