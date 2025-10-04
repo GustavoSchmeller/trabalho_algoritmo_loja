@@ -113,59 +113,120 @@ def verProdutos():
     else:
         print("\n(Não há produtos cadastrados)")
 
-def editarProdutos():                          
+def editarProdutos1():                          
     print("==============|EDITAR PRODUTOS")
     if produtosArmazenados:
-        for produto in produtosArmazenados:
-            print(f"\n{ produto }")
         while True:
-            try: 
-                editarSelecao = int(input("\nQual produto você deseja editar? (Informe o ID)\n: "))
-                idSelecionado = editarSelecao
-                break
-            except ValueError:
-                print("ERRO: O valor digitado não é um inteiro") 
-        
-        if idSelecionado:
-            for produto in produtosArmazenados:
-                if produto.produtoId == idSelecionado:
-                    while True:
-                        print(f"==============|PRODUTO ID #{ idSelecionado }\n")
-                        produto.mostrarItensProduto()
 
-                        while True:
-                            opcao = int(input(f"\nO que deseja editar desse produto? (Digite o numero referente ao item)\n: "))
-                            #if opcao == x:
-                            #    adicionarMarca( produtosArmazenados[ id ] )  
-                            #    break              
-                            if opcao == 1:
-                                adicionarPreco( produto )
-                                break
-                            #elif opcao == x:
-                            #    adicionarTamanho( produtosArmazenados[ id ] )
-                            #    break
-                            #elif opcao == x:
-                            #    adicionarCategoria( produtosArmazenados[ id ] )
-                            #    break
-                            elif opcao == 2:
-                                adicionarQuantidade( produto )
-                                break
-                            elif opcao == 3:
-                                adicionarDescricao( produto )
-                                break
+            
+                produtoEncontrado = ""
+                while True:
+                    try: 
+                        editarSelecao = int(input("\nQual produto você deseja editar? (Informe o ID)\n: "))
+                        idSelecionado = editarSelecao
+                        break
+                    except ValueError:
+                        print("ERRO: O valor digitado não é um inteiro") 
+                
+                # Caso o ID for um numero valido...
+                if idSelecionado:   
+                    # Valida se o ID é referente a um produtoID que existe
+                    for produto in produtosArmazenados:
+                        if produto.produtoId == idSelecionado:
+                            produtoEncontrado = produto
+                    # Caso o produto for encontrado...
+                    if produtoEncontrado:
+                            while True:
+                                print(f"==============|PRODUTO ID #{ idSelecionado }\n")
+                                produtoEncontrado.mostrarItensProduto()
+                                try:
+                                    print(f"==============|PRODUTO ID #{ idSelecionado }\n")
+                                    produtoEncontrado.mostrarItensProduto()
+                                    opcao = int(input(f"\nO que deseja editar desse produto? (Digite o numero referente ao item)\n: "))
+                                    if opcao == 1:
+                                        adicionarPreco( produtoEncontrado )
+                                        break
+                                    elif opcao == 2:
+                                        adicionarQuantidade( produtoEncontrado )
+                                        break
+                                    elif opcao == 3:
+                                        adicionarDescricao( produtoEncontrado )
+                                        break
+                                    else:
+                                        print("ERRO: A opção escolhida não existe\n") 
+                                        break
+                                except:
+                                    print("ERRO: O valor digitado não é um numero inteiro") 
+                            print("SUCESSO: Item editado com sucesso!")
+
+                            continuarEditando = str(input("Deseja editar mais algum item do seu produto? (Digite 's' para continuar ou qualquer tecla para sair)\n: "))
+                            if continuarEditando.upper() == "S":
+                                pass
                             else:
-                                print("ERRO: A opção escolhida não existe") 
-                            print("SUCESSO: Produto editado!")
+                                break
+                            
+                    # Caso o produto referente ao ID não for encontrado...
+                    else:
+                        print("ERRO: O ID digitado não existe")
+                else:
+                    print("ERRO: O ID digitado não existe")
+            #break
 
-                        continuarEditando = str(input("Deseja editar mais algum item do seu produto? (Digite 's' para continuar ou qualquer tecla para sair)\n: "))
-                        if continuarEditando.upper() == "S":
-                            pass
-                        else:
-                            break 
-        else:
-            print("ERRO: O ID digitado não existe")
     else:
         print("\n(Não há produtos cadastrados)")
+
+def editarProdutos():
+    print("==============|EDITAR PRODUTOS")
+    if produtosArmazenados:
+        continuarEditando = True
+        produtoSelecionado = ""
+        produtoEncontrado = ""
+
+        while continuarEditando == True:
+            for produto in produtosArmazenados:
+                print(f"\n{ produto }")
+
+            while True:
+                try:
+                    produtoSelecionado = int(input("Qual produto deseja editar? (Digite o ID)\n: ")) 
+                    break
+                except:
+                    print("ERRO: O valor digitado não é um numero inteiro")
+
+            
+            for produto in produtosArmazenados:
+                if produto.produtoId == produtoSelecionado:
+                    produtoEncontrado = produto
+            
+            if produtoEncontrado:
+                print(f"==============|PRODUTO ID SELECIONADO = #{ produtoEncontrado.produtoId }\n")
+                produtoEncontrado.mostrarItensProduto()
+
+                opcao = int(input(f"\nO que deseja editar desse produto? (Digite o numero referente ao item)\n: "))
+                if opcao == 1:
+                    adicionarPreco( produtoEncontrado )
+                elif opcao == 2:
+                    adicionarQuantidade( produtoEncontrado )
+                elif opcao == 3:
+                    adicionarDescricao( produtoEncontrado )
+                else:
+                    print("ERRO: A opção escolhida não existe\n")
+
+                continuarEditando = str(input("Deseja editar mais algum item do seu produto? (Digite 's' para continuar ou qualquer tecla para sair)\n: "))
+                if continuarEditando.upper() == "S":
+                    pass
+                else:
+                    continuarEditando = False
+            else:
+                print("ERRO: O ID selecionado não é referente a um produto")
+
+
+
+            
+            
+
+    else:
+       print("\n(Não há produtos cadastrados)") 
 
 def apagarProdutos():
     print("==============|APAGAR PRODUTOS")
