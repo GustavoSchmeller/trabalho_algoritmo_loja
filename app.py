@@ -11,7 +11,7 @@ def adicionarMarca( produto:Produto ):
             produto.marca = marcaInformada
             break
         except ValueError as erro:
-            print(f"ERRO: { erro }")
+            print(f"ERRO: { erro }❌")
     return produto.marca
 
 # SOLICITA O PREÇO E FAZ VALIDAÇÕES NO METÓDO
@@ -26,7 +26,7 @@ def adicionarPreco( produto:Produto ):
                 produto.preco = precoInformado
             break
         except ValueError as erro:
-            print(f"ERRO: { erro }")
+            print(f"ERRO: { erro }❌")
     return produto.preco
     
 # SOLICITA O TAMANHO E FAZ VALIDAÇÕES NO METÓDO
@@ -40,7 +40,7 @@ def adicionarTamanho( produto:Produto ):
             produto.tamanho = tamanhoInformado
             break
         except ValueError as erro:
-            print(f"ERRO: { erro }")
+            print(f"ERRO: { erro }❌")
     return produto.tamanho
 
 # SOLICITA A CATEGORIA E FAZ VALIDAÇÕES NO METÓDO
@@ -54,7 +54,7 @@ def adicionarCategoria( produto:Produto ):
             produto.categoria = categoriaInformada
             break
         except ValueError as erro:
-            print(f"ERRO: { erro }")
+            print(f"ERRO: { erro }❌")
     return produto.categoria
 
 # SOLICITA A QUANTIDADE E FAZ VALIDAÇÕES NO METÓDO
@@ -65,7 +65,7 @@ def adicionarQuantidade( produto:Produto ):
             produto.quantidade = quantidadeInformada
             break
         except ValueError as erro:
-            print(f"ERRO: { erro }")
+            print(f"ERRO: { erro }❌")
     return produto.quantidade
 
 # SOLICITA A DESCRIÇÃO E FAZ VALIDAÇÕES NO METÓDO
@@ -76,13 +76,13 @@ def adicionarDescricao( produto:Produto ):
             produto.descricao = descricaoInformada
             break
         except ValueError as erro:
-            print(f"ERRO: { erro }")
+            print(f"ERRO: { erro }❌")
     return produto.descricao
 
 # INICIA O CADASTRO E CHAMA FUNÇÕES PARA VALIDAR
 def cadastrarProdutos():
     limparTerminal()
-    print("==============|CADASTRAR PRODUTOS")
+    print("|==============|  CADASTRAR PRODUTOS\n")
     produto = Produto("","","","","","","")
 
     marca = adicionarMarca( produto )
@@ -101,26 +101,28 @@ def cadastrarProdutos():
         else:
             produto = Produto( produto.produtoId,marca,preco,tamanho,categoria,quantidade,descricao )
         produto.salvarProduto()
-        print("SUCESSO: Produto cadastrado!")
+        limparTerminal()
+        print("SUCESSO: Produto cadastrado!✅")
     else:
-        print("CANCELADO: Produto não cadastrado.")
+        limparTerminal()
+        print("CANCELADO: Produto não cadastrado.❌")
         return 
 
 # MOSTRA TODOS PRODUTOS CADASTRADOS PARA O USUÁRIO
 def verProdutos():
     limparTerminal()
-    print("==============|VER PRODUTOS")
+    print("|==============| VER PRODUTOS")
     if produtosArmazenados:
         for produto in produtosArmazenados:
             print(f"\n{ produto }")
         return
     else:
-        print("\n(Não há produtos cadastrados)")
+        print("\n(Não há produtos cadastrados)❌")
 
 # POSSIBILITA O USUÁRIO EDITAR OS ITENS DOS PRODUTOS
 def editarProdutos():
     limparTerminal()
-    print("==============|EDITAR PRODUTOS")
+    print("|==============| EDITAR PRODUTOS")
     if produtosArmazenados:
         continuarEditando = True
 
@@ -137,18 +139,16 @@ def editarProdutos():
                     if produto.produtoId == idSelecionado:
                         produtoSelecionado = produto
                         produtoExistente = True
-                    else:
-                        produtoExistente = False
-    
+
                 if not produtoExistente:
-                    print("ERRO: O ID digitado não existe")
+                    print("ERRO: O ID digitado não existe.❌")
                 else:
-                    print(f"==============|PRODUTO ID #{produtoSelecionado.produtoId}\n")
+                    print(f"\n|======| PRODUTO ID #{produtoSelecionado.produtoId}\n")
                     while True:
                         try:
                             while True:
                                 produtoSelecionado.mostrarItensProduto()
-                                opcao = int(input(f"\nO que deseja editar desse produto? (Digite o numero referente ao item)\n: "))             
+                                opcao = int(input(f"O que deseja editar desse produto? (Digite o numero referente ao item)\n: "))             
                                 if opcao == 1:
                                     adicionarPreco( produtoSelecionado )
                                     break
@@ -159,26 +159,27 @@ def editarProdutos():
                                     adicionarDescricao( produtoSelecionado )
                                     break
                                 else:
-                                    print("ERRO: A opção escolhida não existe")                                
+                                    print("ERRO: A opção escolhida não existe.❌\n")                                
                             continuarEditando = str(input("Deseja editar mais algum item do seu produto? (Digite 's' para continuar ou qualquer tecla para sair)\n: "))
                             if continuarEditando.upper() == "S":
                                 pass
                             else:
-                                print("SUCESSO: Produto editado!")
+                                limparTerminal()
+                                print("SUCESSO: Produto editado!✅")
                                 continuarEditando = False 
                                 break
                         except ValueError:
-                            print("ERRO: O valor digitado não é um inteiro")
+                            print("ERRO: O valor digitado não é um inteiro.❌\n")
                 #break
             except ValueError:
-                print("ERRO: O valor digitado não é um inteiro")        
+                print("ERRO: O valor digitado não é um inteiro.❌")        
     else:
-        print("\n(Não há produtos cadastrados)")
+        print("\n(Não há produtos cadastrados)❌")
         
 # POSSIBILITA O USUÁRIO APAGAR OS PRODUTOS
 def apagarProdutos():
     limparTerminal()
-    print("==============|APAGAR PRODUTOS")
+    print("|==============| APAGAR PRODUTOS")
     if produtosArmazenados:
 
         while True:
@@ -195,21 +196,23 @@ def apagarProdutos():
                     else:
                         produtoApagado = False
                 if produtoApagado: 
-                    print("SUCESSO: Produto apagado com sucesso!")
+                    limparTerminal()
+                    print("SUCESSO: Produto apagado com sucesso!✅\n")
                     continuarEditando = str(input("Deseja apagar mais algum produto? (Digite 's' para continuar ou qualquer tecla para sair)\n: "))
                     if continuarEditando.upper() == "S":
                         if not produtosArmazenados:
-                            print("ERRO: Não há mais produtos para apagar.")
+                            limparTerminal()
+                            print("ERRO: Não há mais produtos para apagar.❌")
                             break
                         pass
                     else:
                         break 
                 else:
-                    print("ERRO: Produto não encontrado.")
+                    print("ERRO: Produto não encontrado.❌")
             except ValueError:
-                print("ERRO: O valor digitado não é um inteiro")
+                print("ERRO: O valor digitado não é um inteiro.❌")
     else:
-        print("\n(Não há produtos cadastrados para apagar)")
+        print("\n(Não há produtos cadastrados para apagar)❌")
 
 # FAZ A LIMPEZA DO TERMINAL
 def limparTerminal():
@@ -226,7 +229,7 @@ idsArmazenados.append(1)
 continuarNoApp = True
 
 while continuarNoApp == True:
-    print("==============|LOGIN")
+    print("|==============| LOGIN")
     usuarioInput = input("Usuário: ")
     senhaInput = input("Senha: ")
     usuarioNaoExiste = False
@@ -238,7 +241,7 @@ while continuarNoApp == True:
                 limparTerminal()
                 print(f"Olá, { usuario }. Seja bem-vindo!")
                 while True:
-                    print("\n==============|MENU\n")
+                    print("\n|============== MENU 📦 ==============|\n")
                     print("Escolha uma opção:")
                     print("0 - Sair")
                     print("1 - Cadastrar Produtos")
@@ -261,16 +264,16 @@ while continuarNoApp == True:
                         elif opcaoSelecionada == 4:
                             apagarProdutos()
                         else:
-                            print("\nERRO: opção inválida.\n")
+                            print("\nERRO: opção inválida.❌\n")
                         
                     except ValueError:
-                        print("\nERRO: opção inválida.\n")
+                        print("\nERRO: opção inválida.❌\n")
         else:
             usuarioNaoExiste = True
         
         if usuarioNaoExiste:
             limparTerminal()
-            print("ERRO: Usuário não existe ou senha incorreta")
+            print("ERRO: Usuário não existe ou senha incorreta.❌")
 
 
     
