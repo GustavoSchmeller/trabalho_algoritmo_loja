@@ -3,6 +3,7 @@ from classeProduto import Produto,ProdutoDesconto
 from funcValidarDesconto import validarDesconto
 import os
 
+
 # SOLICITA O NOME E FAZ VALIDAÇÕES NO METÓDO
 def adicionarMarca( produto:Produto ):
     while True: 
@@ -79,6 +80,9 @@ def adicionarDescricao( produto:Produto ):
             print(f"ERRO: { erro }❌")
     return produto.descricao
 
+
+
+
 # INICIA O CADASTRO E CHAMA FUNÇÕES PARA VALIDAR
 def cadastrarProdutos():
     limparTerminal()
@@ -86,12 +90,40 @@ def cadastrarProdutos():
     produto = Produto("","","","","","","")
 
     marca = adicionarMarca( produto )
+    limparTerminal()
+    print(f"Marca: { produto.marca } ...\n")
+
     preco = adicionarPreco( produto )
+    limparTerminal()
+    print(f"Marca: { produto.marca } - " 
+            f"Preço: { produto.preco } ...\n")
+    
     tamanho = adicionarTamanho( produto )
+    limparTerminal()
+    print(f"Marca: { produto.marca } - " 
+            f"Preço: { produto.preco } - "
+            f"Tamanho: { produto.tamanho } ...\n")
     
     categoria = adicionarCategoria( produto )
+    limparTerminal()
+    print(f"Marca: { produto.marca } - " 
+            f"Preço: { produto.preco } - "
+            f"Tamanho: { produto.tamanho } ...\n")
+    
     quantidade = adicionarQuantidade( produto )
+    limparTerminal()
+    print(f"Marca: { produto.marca } - " 
+            f"Preço: { produto.preco } - "
+            f"Tamanho: { produto.tamanho } - "
+            f"Quantidade: { produto.quantidade } ...\n")
+    
     descricao = adicionarDescricao( produto )
+    limparTerminal()
+    print(f"Marca: { produto.marca } - " 
+            f"Preço: { produto.preco } - "
+            f"Tamanho: { produto.tamanho } - "
+            f"Quantidade: { produto.quantidade } - "
+            f"Descrição: { produto.descricao } \n")
     
     confirmacaoParaSalvar = input("Deseja salvar? (Digite 's' para salvar ou qualquer tecla para sair)\n: ")
     if confirmacaoParaSalvar.upper() == "S":
@@ -108,6 +140,9 @@ def cadastrarProdutos():
         print("CANCELADO: Produto não cadastrado.❌")
         return 
 
+
+
+
 # MOSTRA TODOS PRODUTOS CADASTRADOS PARA O USUÁRIO
 def verProdutos():
     limparTerminal()
@@ -118,6 +153,9 @@ def verProdutos():
         return
     else:
         print("\n(Não há produtos cadastrados)❌")
+
+
+
 
 # POSSIBILITA O USUÁRIO EDITAR OS ITENS DOS PRODUTOS
 def editarProdutos():
@@ -175,7 +213,10 @@ def editarProdutos():
                 print("ERRO: O valor digitado não é um inteiro.❌")        
     else:
         print("\n(Não há produtos cadastrados)❌")
-        
+
+
+
+
 # POSSIBILITA O USUÁRIO APAGAR OS PRODUTOS
 def apagarProdutos():
     limparTerminal()
@@ -185,7 +226,7 @@ def apagarProdutos():
         while True:
             for produto in produtosArmazenados:
                 print(f"\n{ produto }")
-            idParaApagar = input("Qual produto deseja apagar? (Digite o ID do produto)\n: ")
+            idParaApagar = input("\nQual produto deseja apagar? (Digite o ID do produto)\n: ")
             try:
                 idParaApagarInt = int(idParaApagar)
                 for produto in produtosArmazenados:
@@ -214,9 +255,13 @@ def apagarProdutos():
     else:
         print("\n(Não há produtos cadastrados para apagar)❌")
 
+
+
+
 # FAZ A LIMPEZA DO TERMINAL
 def limparTerminal():
     os.system('cls')
+
 
 
 
